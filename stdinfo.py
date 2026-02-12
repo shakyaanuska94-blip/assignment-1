@@ -7,7 +7,7 @@ if username == "admin" and password == "admin123":
     print("\nLogin successful")
     print("Role: Admin")
 
-    print("1. Add Student")
+    print("1. select Student")
     print("2. Delete Student")
     print("3. Update Mark")
     print("4. View/search student")
