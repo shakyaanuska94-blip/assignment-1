@@ -1,3 +1,17 @@
+students = []
+
+def calculate_grade(marks):
+    if marks >= 90:
+        return "A"
+    elif marks >= 75:
+        return "B"
+    elif marks >= 60:
+        return "C"
+    elif marks >= 40:
+        return "D"
+    else :
+        return "F"
+
 print("Welocme to Student Management System")
 
 username = input("Enter username: ")
@@ -13,6 +27,27 @@ if username == "admin" and password == "admin123":
     print("4. View/search student")
     print("5. Sorting & Topper list")
     print("6. Export to CSV")
+
+    choice=input("Enter choice: ")
+
+    if choice == "1":
+        roll = input("Enter Roll Number: ")
+        name = input("Enter Name: ")
+        marks = int(input("Enter marks: "))
+
+        grade = calculate_grade(marks)
+        print("Student grade is:", grade)
+
+        student = {
+            "roll": roll,
+            "name": name,
+            "marks": marks,
+            "grade": grade
+
+        }
+
+        students.append(student)
+        print("Student Added Successfully ! ")
     
 elif username == "user" and password == "user123":
     print("\nLogin sucessful")
