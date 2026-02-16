@@ -1,4 +1,10 @@
-students = []
+import json
+file_name = "std.json"
+try:
+    with open(file_name,"r")as file:
+        student = json.load(flie)
+except:
+    students = []
 
 def calculate_grade(marks):
     if marks >= 90:
