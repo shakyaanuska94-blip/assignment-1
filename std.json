@@ -1,1 +1,14 @@
-[{"roll": "10", "name": "Anuska", "marks": 30, "grade": "F"}]
+[
+    {
+        "roll": "1",
+        "name": "krish",
+        "marks": 70,
+        "grade": "C"
+    },
+    {
+        "roll": "3",
+        "name": "tini",
+        "marks": 77,
+        "grade": "B"
+    }
+]
