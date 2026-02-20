@@ -1,14 +1,14 @@
 [
     {
-        "roll": "1",
-        "name": "krish",
-        "marks": 70,
+        "roll": "2",
+        "name": "ayuska",
+        "marks": 66,
         "grade": "C"
     },
     {
-        "roll": "3",
-        "name": "tini",
-        "marks": 77,
-        "grade": "B"
+        "roll": "7",
+        "name": "shreya",
+        "marks": 50,
+        "grade": "D"
     }
 ]

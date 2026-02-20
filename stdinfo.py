@@ -3,14 +3,14 @@ import csv
 
 file_name = "std.json"
 
-# Load existing students or create empty list
+# Load existing data
 try:
     with open(file_name, "r") as file:
         students = json.load(file)
 except (FileNotFoundError, json.JSONDecodeError):
     students = []
 
-# --- Grading function ---
+# -------- Grade Function --------
 def calculate_grade(marks):
     if marks >= 90:
         return "A"
@@ -23,25 +23,65 @@ def calculate_grade(marks):
     else:
         return "F"
 
-# --- View all students ---
+# -------- Roll Validation Function --------
+def get_valid_roll():
+    while True:
+        roll = input("Enter Roll Number (numbers only): ")
+        if roll.isdigit():
+            return roll
+        else:
+            print("❌ Invalid Roll Number! Only numbers allowed.")
+
+# -------- Add Student --------
+def add_student():
+    roll = get_valid_roll()
+    name = input("Enter Name: ")
+
+    try:
+        marks = int(input("Enter Marks: "))
+    except:
+        marks = 0
+        print("Invalid input! Marks set to 0.")
+
+    student = {
+        "roll": roll,
+        "name": name,
+        "marks": marks,
+        "grade": calculate_grade(marks)
+    }
+
+    students.append(student)
+
+    with open(file_name, "w") as file:
+        json.dump(students, file, indent=4)
+
+    print("✅ Student Added Successfully!")
+
+# -------- View Students --------
 def view_students():
     if not students:
         print("No student records found!")
         return
+
+    print("\nAll Students:")
     for s in students:
         print(f"Roll: {s['roll']}, Name: {s['name']}, Marks: {s['marks']}, Grade: {s['grade']}")
 
-# --- Search student by roll ---
-def search_students(roll):
+# -------- Search Student --------
+def search_student():
+    roll = get_valid_roll()
+
     for s in students:
         if s['roll'] == roll:
             print(f"Roll: {s['roll']}, Name: {s['name']}, Marks: {s['marks']}, Grade: {s['grade']}")
             return
+
     print("Student not found!")
 
-# --- Delete student ---
-def delete_students(roll):
-    global students
+# -------- Delete Student --------
+def delete_student():
+    roll = get_valid_roll()
+
     for s in students:
         if s['roll'] == roll:
             students.remove(s)
@@ -49,136 +89,94 @@ def delete_students(roll):
                 json.dump(students, file, indent=4)
             print("Student deleted successfully!")
             return
+
     print("Student not found!")
 
-# --- Update student marks ---
-def update_students_marks(roll, new_marks):
+# -------- Update Marks --------
+def update_marks():
+    roll = get_valid_roll()
+
     for s in students:
         if s['roll'] == roll:
+            try:
+                new_marks = int(input("Enter New Marks: "))
+            except:
+                new_marks = 0
+                print("Invalid input! Marks set to 0.")
+
             s['marks'] = new_marks
             s['grade'] = calculate_grade(new_marks)
+
             with open(file_name, "w") as file:
                 json.dump(students, file, indent=4)
-            print("Marks updated successfully!")
+
+            print("Marks Updated Successfully!")
             return
+
     print("Student not found!")
 
-# --- Topper list ---
+# -------- Topper List --------
 def topper_list():
     if not students:
         print("No student records found!")
         return
+
     sorted_students = sorted(students, key=lambda x: x['marks'], reverse=True)
+
     print("\nTopper List:")
     for s in sorted_students:
         print(f"Roll: {s['roll']}, Name: {s['name']}, Marks: {s['marks']}, Grade: {s['grade']}")
 
-# --- Export to CSV ---
+# -------- Export CSV --------
 def export_csv():
     with open("students.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["roll", "name", "marks", "grade"])
         for s in students:
             writer.writerow([s['roll'], s['name'], s['marks'], s['grade']])
-    print("Data exported to students.csv successfully!")
 
-# ---------------- MAIN PROGRAM ---------------- #
+    print("Exported to students.csv successfully!")
+
+# -------- MAIN PROGRAM --------
 
 print("Welcome to Student Management System")
 
-username = input("Enter username: ")
-password = input("Enter password: ")
-
-if username == "admin" and password == "admin123":
-    print("\nLogin successful")
-    print("Role: Admin")
-
-    while True:
-        print("\n1. Add Student")
-        print("2. Delete Student")
-        print("3. Update Marks")
-        print("4. View/Search Students")
-        print("5. Sorting & Topper List")
-        print("6. Export to CSV")
-        print("7. Exit")
-
-        choice = input("Enter choice: ")
-
-        if choice == "1":
-            roll = input("Enter Roll Number: ")
-            name = input("Enter Name: ")
-
-            try:
-                marks = int(input("Enter Marks: "))
-            except:
-                marks = 0
-                print("Invalid input! Marks set to 0.")
-
-            student = {
-                "roll": roll,
-                "name": name,
-                "marks": marks,
-                "grade": calculate_grade(marks)
-            }
-
-            students.append(student)
-
-            with open(file_name, "w") as file:
-                json.dump(students, file, indent=4)
-
-            print("Student Added Successfully!")
-
-        elif choice == "2":
-            roll = input("Enter Roll Number to delete: ")
-            delete_students(roll)
-
-        elif choice == "3":
-            roll = input("Enter Roll Number to update marks: ")
-            try:
-                new_marks = int(input("Enter new Marks: "))
-            except:
-                new_marks = 0
-                print("Invalid input! Marks set to 0.")
-            update_students_marks(roll, new_marks)
-
-        elif choice == "4":
-            roll = input("Enter Roll Number to search: ")
-            if roll:
-                search_students(roll)
-            else:
-                view_students()
-
-        elif choice == "5":
-            topper_list()
-
-        elif choice == "6":
-            export_csv()
-
-        elif choice == "7":
-            print("Exiting program...")
-            break
-
-        else:
-            print("Invalid choice!")
-
-elif username == "user" and password == "user123":
-    print("\nLogin successful")
-    print("Role: User")
-
-    print("1. View/Search Students")
-    print("2. Sorting & Topper List")
+while True:
+    print("\n1. Add Student")
+    print("2. View Students")
+    print("3. Search Student")
+    print("4. Delete Student")
+    print("5. Update Marks")
+    print("6. Topper List")
+    print("7. Export to CSV")
+    print("8. Exit")
 
     choice = input("Enter choice: ")
 
     if choice == "1":
-        roll = input("Enter Roll Number to search (or leave blank to view all): ")
-        if roll:
-            search_students(roll)
-        else:
-            view_students()
+        add_student()
 
     elif choice == "2":
+        view_students()
+
+    elif choice == "3":
+        search_student()
+
+    elif choice == "4":
+        delete_student()
+
+    elif choice == "5":
+        update_marks()
+
+    elif choice == "6":
         topper_list()
 
-else:
-    print("Invalid username or password")
+    elif choice == "7":
+        export_csv()
+
+    elif choice == "8":
+        print("Exiting program...")
+        break
+
+    else:
+        print("Invalid choice!")
