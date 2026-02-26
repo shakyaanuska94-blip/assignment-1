@@ -1,0 +1,77 @@
+# 🎓 Student Management System (Console-Based)
+
+## 📌 Assignment Overview
+This project was developed as part of my academic assignment.
+
+It is a Console-Based Student Management System built using Python.  
+The system allows managing student records with role-based access (Admin/User), JSON file storage, and CSV export functionality.
+
+---
+
+## 🎯 Objectives
+- Implement CRUD operations (Create, Read, Update, Delete)
+- Store student records using JSON file handling
+- Export records to CSV format
+- Implement grading logic based on marks
+- Apply role-based login system
+- Practice error handling
+
+---
+
+## 🛠 Technologies Used
+- Python
+- JSON module
+- CSV module
+- OS module
+- File Handling
+- Conditional Statements
+- Functions
+- Lists & Dictionaries
+
+---
+
+## ⚙️ Features Implemented
+
+### 🔐 Role-Based Login
+- Admin login
+- User login
+- Access control for specific operations
+
+### 📚 Student Record Management
+- Add student
+- View students
+- Update student
+- Delete student
+- Prevent duplicate roll numbers
+
+### 📊 Grade Calculation System
+Marks are converted into grades:
+
+- 90 and above → A  
+- 75–89 → B  
+- 60–74 → C  
+- 40–59 → D  
+- Below 40 → F  
+
+### 💾 Data Storage
+- Student data is stored in a JSON file.
+- Data persists even after the program closes.
+
+### 📤 CSV Export
+- Student records can be exported to CSV format.
+
+---
+
+## 📂 Data Structure Used
+
+Student records are stored as a **list of dictionaries**, for example:
+
+```json
+[
+  {
+    "roll": "101",
+    "name": "Rahul",
+    "marks": 85,
+    "grade": "B"
+  }
+]
